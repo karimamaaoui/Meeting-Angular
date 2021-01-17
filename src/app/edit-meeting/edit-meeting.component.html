@@ -1,0 +1,25 @@
+<h2>Editer un étudiant</h2>
+<form >
+    <div class="form-group">
+        <label >id Meeting</label>
+        <input type="text"  name="idMeet" value="{{meeting.idMeet}}" class="form-control" #idMeet>
+    </div>
+    <div class="form-group">
+        <label >titre</label>
+        <input type="text"  name="titre" value="{{meeting.titre}}" class="form-control" #titre>
+    </div>
+    <div class="form-group">
+        <label >date Debut</label>
+        <input type="date"  name="dateDeb" value="{{meeting.dateDeb}}" class="form-control" #dateDeb>
+   
+    </div>
+    
+    <div class="form-group">
+        <label >date fin</label>
+        <input type="date"  name="dateFin" value="{{meeting.dateFin}}" class="form-control" #dateFin>
+   
+    </div>
+    <div>
+        <input type="button" class="btn btn-primary" value="Valider" (click)="editMeeting(idMeet,titre, lieu, dateDeb,dateFin)">
+    </div>
+</form>
