@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { meeting } from './list/meeting';
+import { Component,OnInit,DoCheck } from '@angular/core';
+import { Meeting } from './list/meeting';
 import { MeetingServService } from './meeting-serv.service';
 
 @Component({
@@ -7,9 +7,9 @@ import { MeetingServService } from './meeting-serv.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements DoCheck,OnInit{
   title = 'modele';
-  meetings : meeting[];
+  meetings : Meeting[];
   action : string;
 
   constructor(private meetserv : MeetingServService){
@@ -17,31 +17,28 @@ export class AppComponent {
   }
   
 
-  showAddMeeting(){
-    this.meetserv.changeAction("add");
-  }
+  // showAddMeeting(){
+  //   this.meetserv.changeAction("add");
+  // }
 
   
-  showEditMeeting(m : meeting, indice : number){
-    this.meetserv.changeAction("edit");
-    this.meetserv.currentIndex = indice;
-    this.meetserv.currentMeeting = m;
-  }
+  // showEditMeeting(m : Meeting, indice : number){
+  //   this.meetserv.changeAction("edit");
+  //   this.meetserv.currentIndex = indice;
+  //   this.meetserv.currentMeeting = m;
+  // }
 
-  deleteMeeting(indice : number){
-    this.meetserv.deleteMeeting(indice);
-  }
  
 
   ngDoCheck(){
-    this.meetings = this.meetserv.getMeetings();
-    this.action = this.meetserv.getAction();
+    //this.meetings = this.meetserv.getMeetings();
+   // this.action = this.meetserv.getAction();
   }
 
   ngOnInit(){
-    this.meetings = this.meetserv.getMeetings();
+    //this.meetings = this.meetserv.getMeetings();
     ///console.log(this.meetserv);
-    this.action =  this.meetserv.getAction();
+    //this.action =  this.meetserv.getAction();
   }
 
 }
