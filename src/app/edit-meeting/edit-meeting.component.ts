@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { meeting } from '../list/meeting';
+import { Component,OnInit, Input, Output, EventEmitter ,DoCheck } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Meeting } from '../list/meeting';
 import { MeetingServService } from '../meeting-serv.service';
 
 @Component({
@@ -8,28 +10,52 @@ import { MeetingServService } from '../meeting-serv.service';
   styleUrls: ['./edit-meeting.component.css']
 })
 export class EditMeetingComponent implements OnInit {
-  Meeting : meeting;
 
-  constructor(private meetservice : MeetingServService) { }
+  public meeting: Meeting;
+  public meetID: number;
+  public meetingForm: FormGroup;
 
-  editMeeting(idMeet : HTMLInputElement, titre : HTMLInputElement, lieu : HTMLInputElement,dateDeb:HTMLInputElement,dateFin:HTMLInputElement){
-    let updatedMeeting = new meeting(idMeet.valueAsNumber,titre.value,lieu.value,dateDeb.valueAsDate,dateFin.valueAsDate);
-    this.meetservice.editMeeting(updatedMeeting);
-    idMeet.value="";
-    titre.value="";
-    lieu.value="";
-    dateDeb.valueAsDate=new Date();
-    dateFin.valueAsDate=new Date();
-   
+  constructor(
+    private router: Router,
+    private readonly formBuilder: FormBuilder,
+    private readonly activeRoute: ActivatedRoute,
+    private readonly meetingService : MeetingServService,
+  ) { }
+  
+
+  ngOnInit(): void {
+    this.prepareForm();
   }
 
-  ngDoCheck(){
-    this.Meeting = this.meetservice.getCurrentMeeting();
+  onEditMeeting(): void {
+    const {idMeet, titre, lieu, dateDeb, dateFin} = this.meetingForm.value;
+    this.meetingService.editMeeting(this.meetingForm.value);
+    this.router.navigate(['list']);
+    this.meetingService.saveMeeting();
+    // console.log(idMeet, titre, lieu, dateDeb, dateFin);
+  }
+  
+
+  private patchForm(id: number): void {
+    const meet = this.meetingService.getMeetingById(id);
+    this.meetingForm = this.formBuilder.group(
+      {
+        idMeet: new FormControl(meet.idMeet, Validators.compose([Validators.required])),
+        titre: new FormControl(meet.titre, Validators.compose([Validators.required])),
+        lieu: new FormControl(meet.lieu, Validators.compose([Validators.required])),
+        dateDeb: new FormControl(new Date(meet.dateDeb).toISOString().substring(0, 10), Validators.compose([Validators.required])),
+        dateFin: new FormControl(new Date(meet.dateFin).toISOString().substring(0, 10), Validators.compose([Validators.required]))
+      }
+    );
   }
 
-  ngOnInit() {
-    this.Meeting = this.meetservice.getCurrentMeeting();
+  private prepareForm(): void {
+    this.activeRoute.params.subscribe(params => {
+      this.meetID = +params['idMeet']; // (+) converts string 'id' to a number
+      this.patchForm(this.meetID);
+   });
   }
 
-
+  
+  
 }
