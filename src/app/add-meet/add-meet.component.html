@@ -1,34 +1,35 @@
-<div class="container" > 
+<h1 >Add Meeting</h1>
+<div class="container">
     <div class="row">
         <div class="col-md-8">
-            <form   >
+            <form [formGroup]="meetingForm" (ngSubmit)="onAddMeeting()">
                 <div class="form-group">
-                <label >ID Meeting</label>
-                <input type="number"   name="idMeet" class="form-control" #idMeet>
+                    <label>ID Meeting</label>
+                    <input type="number"  formControlName="idMeet" class="form-control">
                 </div>
                 <div class="form-group">
-                <label>Titre :</label>
-                <input type="text"   name="titre" class="form-control" #titre>
+                    <label>Titre :</label>
+                    <input type="text"  formControlName="titre" class="form-control">
                 </div>
                 <div class="form-group">
-                <label>Lieu :</label>
-                <input type="text"   name="lieu" class="form-control" #lieu>
+                    <label>Lieu :</label>
+                    <input type="text"  formControlName="lieu" class="form-control">
                 </div>
                 <div class="form-group">
-                <label>Date Debut :</label>
-                <input type="date"  name="dateDeb" class="form-control" #dateDeb>
+                    <label>Date Debut :</label>
+                    <input type="date"  formControlName="dateDeb" class="form-control">
                 </div>
                 <div class="form-group">
-                <label>Date Fin :</label>
-                <input type="date"  name="dateFin" class="form-control" #dateFin>
+                    <label>Date Fin :</label>
+                    <input type="date"  formControlName="dateFin" class="form-control">
+
 
                 </div>
                 <div>
-                <input type="button" class="btn btn-primary " value="Valider" (click)="addMeeting(idMeet,titre,lieu,dateDeb,dateFin)">
-                <input type="button" class="btn btn-danger"  value="Reset" >
-                </div>  
+                    <input type="submit" class="btn btn-primary " value="Valider">
+                </div>
             </form>
-             
+
         </div>
     </div>
 </div>
