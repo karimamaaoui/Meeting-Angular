@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { AddMeetComponent } from './add-meet/add-meet.component';
 import { DetailsComponent } from './details/details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditMeetingComponent } from './edit-meeting/edit-meeting.component';
-//import {MatDatepickerModule} from '@angular/material/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { MeetingServService } from './meeting-serv.service';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,16 @@ import { EditMeetingComponent } from './edit-meeting/edit-meeting.component';
   ],
 
   imports: [
-    BrowserModule,
     NgbModule,
-    //MatDatepickerModule,
+    FormsModule,
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
 
   ],
-  providers: [],
+  providers: [
+    MeetingServService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
