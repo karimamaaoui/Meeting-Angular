@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { meeting } from '../list/meeting';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Meeting } from '../list/meeting';
 import { MeetingServService } from '../meeting-serv.service';
 
 
@@ -9,24 +11,35 @@ import { MeetingServService } from '../meeting-serv.service';
   styleUrls: ['./add-meet.component.css']
 })
 export class AddMeetComponent implements OnInit {
+  public meetingForm: FormGroup;
 
 
-  constructor(private meetserv : MeetingServService) { }
-  
-  addMeeting(idMeet :HTMLInputElement, titre : HTMLInputElement, lieu : HTMLInputElement, dateDeb:HTMLInputElement,dateFin:HTMLInputElement){
-    var newMeeting = new meeting(idMeet.valueAsNumber,titre.value,lieu.value,dateDeb.valueAsDate,dateFin.valueAsDate);
-    console.log(newMeeting);
+  constructor(
+    private router: Router,
+    private readonly formBuilder: FormBuilder,
+    private meetingService: MeetingServService,
+  ) { }
 
-    this.meetserv.addMeeting(newMeeting);
-    idMeet.value="";
-    titre.value = "";
-    lieu.value = "";
-    dateDeb.valueAsDate = new Date();
-    dateFin.valueAsDate = new Date();
+  onAddMeeting() {
+
+    this.meetingService.addMeeting(this.meetingForm.value);
+    this.router.navigate(['list']);
+    this.meetingService.saveMeeting();
   }
-  
+
+
   ngOnInit() {
-    
-    }
+    this.meetingForm = this.formBuilder.group(
+      {
+        idMeet: new FormControl('', Validators.compose([Validators.required])),
+        titre: new FormControl('', Validators.compose([Validators.required])),
+        lieu: new FormControl('', Validators.compose([Validators.required])),
+        dateDeb: new FormControl(new Date().toISOString().substring(0, 10), Validators.compose([Validators.required])),
+        dateFin: new FormControl(new Date().toISOString().substring(0, 10), Validators.compose([Validators.required]))
+      }
+    );
+
+  }
+
 
 }
