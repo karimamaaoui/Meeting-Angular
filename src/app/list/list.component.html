@@ -1,19 +1,22 @@
-<h1>Meeting List</h1>
+<div>
+  <input type="button" class="btn btn-info" style="width:200px" value="Add Meeting" (click)="showAddMeeting()">
 
-<div *ngFor="let meeting of Meetings">
-<div class="card" style="width: 18rem;">
+</div>
+
+<h1 style="margin: auto">Meeting List</h1>
+
+<div *ngFor="let meeting of meetings ; let i=index;">
+  <div class="card" style="width: 25rem;">
     <div class="card-body">
+      <img src="https://www.apacom.fr/wp-content/uploads/2018/10/Meet-up-r%C3%A9duit.png"
+        class="img-fluid rounded-circle w-50 mb-3" alt="">
       <h5 class="card-title">Titre {{ meeting.titre }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">Lieu {{ meeting.lieu }}</h6>
       <p class="card-text">{{meeting.dateDeb}} </p>
-      <input type="button" class="btn btn-info" value="Editer" >
-      <input type="button" class="btn btn-danger" value="delete" (click)="deleteMeeting(i)">
-      <input type="button" class="btn btn-primary" value="Details">
-      
-
-
+      <input type="button" class="btn btn-info" value="Editer" style="margin-left: 20px;" (click)="showEditMeeting(meeting)">
+      <input type="button" class="btn btn-danger" value="Supprimer" style="margin-left: 20px;" (click)="deleteMeeting(i)">
+      <input type="button" class="btn btn-primary" value="Details" style="margin-left: 20px;" (click)="showDetails(meeting)"> 
     </div>
-</div>
+  </div>
 </div>
 
-  
